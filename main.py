@@ -1,6 +1,6 @@
 # main.py
 
-from fastapi import FastAPI, HTTPException, BackgroundTasks
+from fastapi import FastAPI, HTTPException, BackgroundTasks, Request
 from fastapi.middleware.cors import CORSMiddleware
 from telegram import Update
 from pydantic import BaseModel
@@ -21,9 +21,6 @@ logging.basicConfig(
     filename='logs/fursat_ai.log'
 )
 logger = logging.getLogger(__name__)
-
-class TelegramWebhookResponse(BaseModel):
-    status: str
 
 # Initialize FastAPI app
 app = FastAPI(
@@ -116,11 +113,13 @@ async def whatsapp_webhook(message_data: dict):
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/webhook/telegram")
-async def telegram_webhook(update: Update, response_model=None):
+async def telegram_webhook(request: Request, response_model=None):
     """
     Handle incoming Telegram messages
     """
     try:
+        body = await request.json()
+        update = Update.de_json(body, bot=None)
         return await handle_telegram_message(update)
     except Exception as e:
         logger.error(f"Error in Telegram webhook: {str(e)}")
