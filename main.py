@@ -2,11 +2,12 @@
 
 from fastapi import FastAPI, HTTPException, BackgroundTasks, Request
 from fastapi.middleware.cors import CORSMiddleware
-from telegram import Update
+from telegram import Update, Bot
 from pydantic import BaseModel
 from typing import Optional, Dict, Any
 import logging
 import json
+import os
 from datetime import datetime
 
 from agents.content_creator import ContentCreatorAgent
@@ -37,6 +38,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+bot = Bot(os.getenv("TELEGRAM_BOT_TOKEN"))
 
 # Initialize agents
 content_creator = ContentCreatorAgent()
@@ -119,7 +122,7 @@ async def telegram_webhook(request: Request, response_model=None):
     """
     try:
         body = await request.json()
-        update = Update.de_json(body, bot=None)
+        update = Update.de_json(body, bot=bot)
         return await handle_telegram_message(update)
     except Exception as e:
         logger.error(f"Error in Telegram webhook: {str(e)}")
