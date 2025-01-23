@@ -30,7 +30,7 @@ class Settings(BaseSettings):
     CONTENT_COLLECTION: str = "content"
     
     # Cache Settings
-    REDIS_URL: str = "redis://redis:6379/0"
+    REDIS_URL: str = os.getenv("REDIS_URL")
     CACHE_TTL: int = 3600  # 1 hour
     
     # Rate Limiting
