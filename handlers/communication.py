@@ -39,7 +39,7 @@ async def handle_whatsapp_message(message_data: dict):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-async def handle_telegram_message(update: Update, context):
+async def handle_telegram_message(update: Update):
     """Handle incoming Telegram messages."""
     try:
         message_text = update.message.text
