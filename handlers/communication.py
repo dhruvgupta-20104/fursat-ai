@@ -83,7 +83,7 @@ async def handle_telegram_message(update: Update):
         await update.message.reply_text(json.dumps(response, indent=2))
         
     except Exception as e:
-        await update.message.reply_text(f"Error: {str(e)}")
+        await HTTPException(status_code=500, detail=str(e))
 
 # # API endpoints
 # @app.post("/webhook/whatsapp")

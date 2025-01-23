@@ -2,6 +2,7 @@
 
 from fastapi import FastAPI, HTTPException, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
+from telegram import Update
 from pydantic import BaseModel
 from typing import Optional, Dict, Any
 import logging
@@ -112,7 +113,7 @@ async def whatsapp_webhook(message_data: dict):
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/webhook/telegram", response_model=None)
-async def telegram_webhook(update: dict):
+async def telegram_webhook(update: Update):
     """
     Handle incoming Telegram messages
     """
