@@ -116,7 +116,7 @@ async def whatsapp_webhook(message_data: dict):
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/webhook/telegram")
-async def telegram_webhook(update: dict, response_model=TelegramWebhookResponse):
+async def telegram_webhook(update: Update, response_model=TelegramWebhookResponse):
     """
     Handle incoming Telegram messages
     """
