@@ -22,6 +22,9 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+class TelegramWebhookResponse(BaseModel):
+    status: str
+
 # Initialize FastAPI app
 app = FastAPI(
     title="Fursat.fun AI Multi-Agent System",
@@ -113,7 +116,7 @@ async def whatsapp_webhook(message_data: dict):
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/webhook/telegram")
-async def telegram_webhook(update: Update):
+async def telegram_webhook(update: dict, response_model=TelegramWebhookResponse):
     """
     Handle incoming Telegram messages
     """
