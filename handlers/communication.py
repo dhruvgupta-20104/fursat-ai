@@ -10,12 +10,11 @@ import json
 import os
 
 app = FastAPI()
-router = AgentRouter()
 
 # Initialize Telegram bot
 telegram_bot = ApplicationBuilder().token(os.getenv("TELEGRAM_BOT_TOKEN")).build()
 
-async def handle_whatsapp_message(message_data: dict):
+async def handle_whatsapp_message(message_data: dict, router: AgentRouter):
     """Handle incoming WhatsApp messages."""
     try:
         # Process message based on type
@@ -39,7 +38,7 @@ async def handle_whatsapp_message(message_data: dict):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-async def handle_telegram_message(update: Update):
+async def handle_telegram_message(update: Update, router: AgentRouter):
     """Handle incoming Telegram messages."""
     try:
         message_text = update.message.text
@@ -84,18 +83,6 @@ async def handle_telegram_message(update: Update):
         
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-
-# # API endpoints
-# @app.post("/webhook/whatsapp")
-# async def whatsapp_webhook(message_data: dict):
-#     """Webhook for WhatsApp messages."""
-#     return await handle_whatsapp_message(message_data)
-
-# @app.post("/webhook/telegram")
-# async def telegram_webhook(update: Update):
-#     """Webhook for Telegram messages."""
-#     await handle_telegram_message(update, None)
-#     return {"status": "ok"}
 
 # Set up Telegram handlers
 telegram_bot.add_handler(CommandHandler("start", handle_telegram_message))

@@ -110,7 +110,7 @@ async def whatsapp_webhook(message_data: dict):
     Handle incoming WhatsApp messages
     """
     try:
-        return await handle_whatsapp_message(message_data)
+        return await handle_whatsapp_message(message_data, router)
     except Exception as e:
         logger.error(f"Error in WhatsApp webhook: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
@@ -123,7 +123,7 @@ async def telegram_webhook(request: Request, response_model=None):
     try:
         body = await request.json()
         update = Update.de_json(body, bot=bot)
-        return await handle_telegram_message(update)
+        return await handle_telegram_message(update, router)
     except Exception as e:
         logger.error(f"Error in Telegram webhook: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
