@@ -3,16 +3,10 @@
 from fastapi import FastAPI, HTTPException
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters
-import aiosmtplib
-from email.message import EmailMessage
-from core.agent_base import AgentRouter
 import json
 import os
 
-app = FastAPI()
-
-# Initialize Telegram bot
-telegram_bot = ApplicationBuilder().token(os.getenv("TELEGRAM_BOT_TOKEN")).build()
+from core.agent_base import AgentRouter
 
 async def handle_whatsapp_message(message_data: dict, router: AgentRouter):
     """Handle incoming WhatsApp messages."""
@@ -83,6 +77,9 @@ async def handle_telegram_message(update: Update, router: AgentRouter):
         
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    
+# Initialize Telegram bot
+telegram_bot = ApplicationBuilder().token(os.getenv("TELEGRAM_BOT_TOKEN")).build()
 
 # Set up Telegram handlers
 telegram_bot.add_handler(CommandHandler("start", handle_telegram_message))

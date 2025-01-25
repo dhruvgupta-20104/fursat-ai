@@ -1,12 +1,13 @@
 # main.py
 
+from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, BackgroundTasks, Request
 from fastapi.middleware.cors import CORSMiddleware
 from telegram import Update, Bot
 from pydantic import BaseModel
 from typing import Optional, Dict, Any
-import logging
-import json
+import logging 
+import uvicorn
 import os
 from datetime import datetime
 
@@ -140,5 +141,6 @@ async def health_check():
     }
 
 if __name__ == "__main__":
-    import uvicorn
+    # Load environment variables
+    load_dotenv()
     uvicorn.run(app, host="0.0.0.0", port=8000)

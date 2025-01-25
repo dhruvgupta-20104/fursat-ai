@@ -1,11 +1,11 @@
 # agents/trip_planner.py
 
 from typing import Dict, Any
-import asyncio
 from pymongo import MongoClient
-from core.agent_base import BaseAgent
 import openai
 import os
+
+from core.agent_base import BaseAgent
 
 class TripPlannerAgent(BaseAgent):
     def __init__(self):

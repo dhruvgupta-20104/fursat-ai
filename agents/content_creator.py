@@ -2,18 +2,18 @@
 
 import os
 from typing import Dict, Any
-import asyncio
 from moviepy.editor import VideoFileClip, TextClip, CompositeVideoClip, AudioFileClip
 import openai
 from pytube import YouTube
-from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import InstalledAppFlow
-from googleapiclient.discovery import build
+import logging
+
 from core.agent_base import BaseAgent
+from Bot.ContentBot.main import process_channel
 
 class ContentCreatorAgent(BaseAgent):
     def __init__(self):
         super().__init__("ContentCreator")
+        self.logger = logging.getLogger("ContentCreatorAgent")
         self.openai_client = openai.Client(api_key=os.getenv("OPENAI_API_KEY"))
         
     async def process_message(self, message: Dict[str, Any]) -> Dict[str, Any]:
@@ -22,27 +22,28 @@ class ContentCreatorAgent(BaseAgent):
             content_url = message.get("content_url")
 
             if content_type == "youtube":
-                # Download and process YouTube video
-                video_data = await self._process_youtube_video(content_url)
+                process_channel(content_url)
+                # # Download and process YouTube video
+                # video_data = await self._process_youtube_video(content_url)
 
-                # Generate content using GPT
-                caption = await self._generate_caption(video_data["title"])
+                # # Generate content using GPT
+                # caption = await self._generate_caption(video_data["title"])
 
-                # Create short video
-                short_path = await self._create_short(
-                    video_data["path"],
-                    caption,
-                    video_data["title"]
-                )
+                # # Create short video
+                # short_path = await self._create_short(
+                #     video_data["path"],
+                #     caption,
+                #     video_data["title"]
+                # )
 
-                # Schedule content
-                schedule_result = await self._schedule_content(short_path, caption)
+                # # Schedule content
+                # schedule_result = await self._schedule_content(short_path, caption)
 
                 return {
                     "status": "success",
-                    "video_path": short_path,
-                    "caption": caption,
-                    "schedule": schedule_result
+                    # "video_path": short_path,
+                    # "caption": caption,
+                    # "schedule": schedule_result
                 }
 
             return {"error": "Unsupported content type"}

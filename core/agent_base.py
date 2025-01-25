@@ -3,18 +3,6 @@
 from abc import ABC, abstractmethod
 import logging
 from typing import Dict, Any
-from datetime import datetime
-import os
-from dotenv import load_dotenv
-
-# Load environment variables
-load_dotenv()
-
-# Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
 
 class BaseAgent(ABC):
     """Base class for all agents in the system."""
