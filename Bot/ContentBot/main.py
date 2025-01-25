@@ -1,7 +1,7 @@
 import os
 
 from Bot.ContentBot.yt_processor import fetch_top_videos, download_video
-from Bot.ContentBot.clip_engine import generate_clips
+from Bot.ContentBot.clip_engine import ClipGenerator
 from Bot.ContentBot.caption_engine import add_captions
 from Bot.ContentBot.formatter import format_for_reels
 from Bot.ContentBot.ig_uploader import InstagramManager
@@ -23,8 +23,9 @@ def process_channel(channel_url: str):
             local_path = download_video(vid.watch_url)
 
             # Generate clips
-            clips = generate_clips(local_path)
-
+            clip_gen = ClipGenerator(local_path)
+            clips = clip_gen.generate_clips()
+            
             # Process each clip
             for idx, clip in enumerate(clips):
                 processed = format_for_reels(add_captions(clip))
