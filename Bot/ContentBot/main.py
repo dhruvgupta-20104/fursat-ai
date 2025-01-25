@@ -1,10 +1,10 @@
 import os
 
-from yt_processor import fetch_top_videos, download_video
-from clip_engine import generate_clips
-from caption_engine import add_captions
-from formatter import format_for_reels
-from ig_uploader import InstagramManager
+from Bot.ContentBot.yt_processor import fetch_top_videos, download_video
+from Bot.ContentBot.clip_engine import generate_clips
+from Bot.ContentBot.caption_engine import add_captions
+from Bot.ContentBot.formatter import format_for_reels
+from Bot.ContentBot.ig_uploader import InstagramManager
 
 def process_channel(channel_url: str):
     """Full processing pipeline"""

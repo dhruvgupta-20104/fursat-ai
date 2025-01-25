@@ -1,8 +1,8 @@
 import random
 from moviepy.editor import VideoFileClip
 
-from viral_detector import ViralMomentDetector
-from config import Config
+from Bot.ContentBot.viral_detector import ViralMomentDetector
+from Bot.ContentBot.config import Config
 
 class ClipGenerator:
     def __init__(self, video_path):

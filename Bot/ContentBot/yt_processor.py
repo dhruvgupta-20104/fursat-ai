@@ -1,7 +1,7 @@
 from pytube import YouTube, Channel
 import os
 
-from config import Config as config
+from Bot.ContentBot.config import Config as config
 
 def fetch_top_videos(channel_url: str) -> list:
     """Fetch top viewed videos from a YouTube channel"""

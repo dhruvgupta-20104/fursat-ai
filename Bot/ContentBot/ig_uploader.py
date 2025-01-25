@@ -4,7 +4,7 @@ import logging
 import os
 import random
 
-from config import Config
+from Bot.ContentBot.config import Config
 
 class InstagramManager:
     MAX_RETRIES = 3
