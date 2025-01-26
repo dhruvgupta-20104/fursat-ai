@@ -27,12 +27,3 @@ aiosmtplib==2.0.2
 python-multipart==0.0.6
 aiofiles==23.2.1
 schedule==1.2.1
-
-pytube==15.0.0
-moviepy==1.0.3
-openai-whisper==20231117
-instabot==0.117.0
-python-dotenv==1.0.0
-ffmpeg-python==0.2.0
-numpy==1.24.3
-librosa
